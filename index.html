@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moonveil - Tarot Celestial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="stars-overlay"></div>
+
+    <main class="container">
+        <header class="hero" id="hero">
+
+            <!-- Logo — sempre visível -->
+            <div class="logo-container">
+                <div class="moon-logo">
+                    <span class="icon-moon">🌙</span>
+                    <span class="emblem e1">✦</span>
+                    <span class="emblem e2">✶</span>
+                    <span class="emblem e3">✧</span>
+                </div>
+                <div class="divider neon-blue"></div>
+            </div>
+
+            <h1 class="main-title">Moonveil</h1>
+            <p class="subtitle">Tarot Celestial</p>
+
+            <!-- Divisor e descrição somem ao compactar -->
+            <div class="hero-collapsible">
+                <div class="divider-container">
+                    <div class="divider neon-green"></div>
+                    <span class="icon-telescope">🔭</span>
+                </div>
+                <p class="description">
+                    Onde as estrelas revelam segredos e as cartas tecem o destino<br>
+                    através dos véus do cosmos.
+                </p>
+            </div>
+
+            <!-- PÁGINA INICIAL -->
+            <div id="home-page" class="page active">
+                <button class="btn-primary" onclick="abrirDecks()">
+                    <span class="btn-icon">✨</span> Puxar Cartas <span class="btn-icon">✨</span>
+                </button>
+            </div>
+
+            <!-- placeholders para o showPage funcionar -->
+            <div id="decks-page"    class="page"></div>
+            <div id="tiragem-page"  class="page"></div>
+            <div id="resultado-page"class="page"></div>
+
+        </header>
+
+        <!-- ══════════════════════════════════════════════
+             TELA 1 — ESCOLHA DO DECK
+        ══════════════════════════════════════════════ -->
+        <section id="section-decks" class="decks-section" style="display:none;">
+            <div class="section-title-container">
+                <h2 class="section-title">Escolha seu Deck</h2>
+                <div class="divider neon-gold"></div>
+            </div>
+
+            <div class="decks-grid">
+                <div class="deck-card lenormand" onclick="selecionarDeck(this, 'lenormand')">
+                    <div class="card-border-effect"></div>
+                    <span class="deck-icon">🌙</span>
+                    <h3 class="deck-name">Lenormand</h3>
+                    <p class="deck-desc">Um sistema de 36 cartas que oferece respostas diretas e práticas para questões do dia a dia.</p>
+                    <div class="deck-status">Selecionar Deck</div>
+                </div>
+
+                <div class="deck-card rider-waite" onclick="selecionarDeck(this, 'rider')">
+                    <div class="card-border-effect"></div>
+                    <span class="deck-icon">⭐</span>
+                    <h3 class="deck-name">Rider-Waite</h3>
+                    <p class="deck-desc">Os 22 arcanos maiores do deck mais clássico e icônico, cartas poderosas ricas em simbolismo e significados profundos.</p>
+                    <div class="deck-status">Selecionar Deck</div>
+                </div>
+
+                <div class="deck-card sibila" onclick="selecionarDeck(this, 'sibilla')">
+                    <div class="card-border-effect"></div>
+                    <span class="deck-icon">🔮</span>
+                    <h3 class="deck-name">Sibila Italiana</h3>
+                    <p class="deck-desc">Baralho tradicional italiano com 52 cartas que combina numerologia e sabedoria ancestral.</p>
+                    <div class="deck-status">Selecionar Deck</div>
+                </div>
+            </div>
+
+            <div id="btn-avancar-tiragem" style="display:none;">
+                <button class="btn-primary" onclick="mostrarTiragens()">
+                    <span class="btn-icon">✨</span> Escolher Tiragem <span class="btn-icon">✨</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════
+             TELA 2 — ESCOLHA DA TIRAGEM
+        ══════════════════════════════════════════════ -->
+        <section id="section-tiragens" class="decks-section" style="display:none;">
+            <div class="section-title-container">
+                <h2 class="section-title">Escolha sua Tiragem</h2>
+                <div class="divider neon-gold"></div>
+            </div>
+
+            <div class="decks-grid grid-4">
+                <div class="deck-card" onclick="selecionarTiragem(this, 'passado-presente-futuro')">
+                    <div class="card-border-effect"></div>
+                    <span class="deck-icon">⏳</span>
+                    <h3 class="deck-name">Passado, Presente e Futuro</h3>
+                    <p class="deck-desc">3 cartas que revelam a linha do tempo ao redor de uma questão.</p>
+                    <div class="deck-status">Selecionar</div>
+                </div>
+
+                <div class="deck-card" onclick="selecionarTiragem(this, 'afrodite')">
+                    <div class="card-border-effect"></div>
+                    <span class="deck-icon">💘</span>
+                    <h3 class="deck-name">Templo de Afrodite</h3>
+                    <p class="deck-desc">7 cartas que revelam os sentimentos, pensamentos e chamas dos dois lados de uma relação.</p>
+                    <div class="deck-status">Selecionar</div>
+                </div>
+
+                <div class="deck-card" onclick="selecionarTiragem(this, 'eris')">
+                    <div class="card-border-effect"></div>
+                    <span class="deck-icon">⚡</span>
+                    <h3 class="deck-name">Mão Direita de Éris</h3>
+                    <p class="deck-desc">5 cartas que mapeiam uma situação: o centro, os obstáculos, os aliados e os possíveis caminhos.</p>
+                    <div class="deck-status">Selecionar</div>
+                </div>
+
+                <div class="deck-card" onclick="selecionarTiragem(this, 'sim-nao')">
+                    <div class="card-border-effect"></div>
+                    <span class="deck-icon">🌗</span>
+                    <h3 class="deck-name">Sim ou Não</h3>
+                    <p class="deck-desc">1 carta para uma resposta direta do cosmos sobre uma questão objetiva.</p>
+                    <div class="deck-status">Selecionar</div>
+                </div>
+            </div>
+
+            <div id="btn-revelar" style="display:none;">
+                <button class="btn-primary" onclick="tirarCartas()">
+                    <span class="btn-icon">🔮</span> Revelar Tiragem <span class="btn-icon">🔮</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════
+             TELA 3 — RESULTADO
+        ══════════════════════════════════════════════ -->
+        <section id="section-resultado" style="display:none;">
+            <div class="section-title-container">
+                <h2 class="section-title" id="titulo-resultado">Sua Tiragem</h2>
+                <div class="divider neon-gold"></div>
+            </div>
+
+            <div id="loading-tiragem" style="text-align:center; padding:2rem; display:none;">
+                <p style="font-family:'Cinzel',serif; color:var(--neon-gold);">✨ As cartas estão sendo reveladas... ✨</p>
+            </div>
+
+            <div id="erro-tiragem" style="text-align:center; padding:1rem; display:none;">
+                <p style="color:#ff6b6b;">Não foi possível conectar ao oráculo. Verifique se o servidor está rodando.</p>
+            </div>
+
+            <!-- Sim ou Não -->
+            <div id="resultado-sim-nao" style="display:none;">
+                <div id="sim-nao-resposta"></div>
+                <div id="sim-nao-carta" class="decks-grid grid-1"></div>
+                <p id="sim-nao-explicacao"></p>
+            </div>
+
+            <!-- Tiragens normais -->
+            <div id="cartas-grid" class="decks-grid"></div>
+
+            <div style="text-align:center; margin-top:2rem;">
+                <button class="btn-primary" onclick="novaTiragem()">
+                    <span class="btn-icon">✨</span> Nova Tiragem <span class="btn-icon">✨</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <section class="about-footer-unified">
+        <div class="about-header-unified">
+            <span class="icon-telescope-green">🔭</span>
+            <div class="divider-neon-gold"></div>
+            <h2 class="title-about-gold">Sobre o Moonveil</h2>
+        </div>
+        <div class="about-text-content">
+            <p>O Moonveil é um portal místico onde a sabedoria ancestral do tarot encontra a observação celestial. Através das cartas sagradas e dos astros, revelamos os caminhos ocultos do seu destino e iluminamos as sombras do desconhecido.</p>
+            <p>Nossa missão é guiar almas em busca de clareza, oferecendo um espaço digital que conecta o mundano ao divino, sempre com respeito à energia única de cada consulente e à sabedoria eterna das estrelas.</p>
+        </div>
+        <div class="about-emblems-copyright">
+            <div class="emblem-group">
+                <span class="emblem-icon">🌙</span>
+                <span class="emblem-icon">⭐</span>
+                <span class="emblem-icon">✨</span>
+            </div>
+            <p class="copyright-text">&copy; 2026 Moonveil Tarot. Todos os direitos reservados.</p>
+            <p class="tagline-text">Iluminando caminhos através da sabedoria das estrelas</p>
+            <div class="nav-icons-group">
+                <span>🔭</span> <span>👁️</span> <span>🔮</span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // ─── Estado ───────────────────────────────────────────────────────────
+        let deckSelecionado    = null;
+        let tiragemSelecionada = null;
+
+        const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+            ? 'http://localhost:8080' : '';
+
+        const NOMES_TIRAGEM = {
+            'passado-presente-futuro': 'Passado, Presente e Futuro',
+            'afrodite': 'Templo de Afrodite',
+            'eris': 'Mão Direita de Éris',
+            'sim-nao': 'Sim ou Não',
+        };
+
+        const ICONES = ['🌙', '⭐', '✨', '🔮', '🌟', '💫', '🌗'];
+
+        // ─── Hero: compactar / expandir ───────────────────────────────────────
+        function compactarHero() {
+            document.getElementById('hero').classList.add('compacted');
+        }
+
+        function expandirHero() {
+            document.getElementById('hero').classList.remove('compacted');
+        }
+
+        // ─── Navegação entre seções ───────────────────────────────────────────
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+
+            document.getElementById('section-decks').style.display     = pageId === 'decks-page'     ? 'flex' : 'none';
+            document.getElementById('section-tiragens').style.display  = pageId === 'tiragem-page'   ? 'flex' : 'none';
+            document.getElementById('section-resultado').style.display = pageId === 'resultado-page' ? 'block': 'none';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ─── Abre tela de decks + anima hero ─────────────────────────────────
+        function abrirDecks() {
+            compactarHero();
+            showPage('decks-page');
+        }
+
+        // ─── Seleção de Deck ──────────────────────────────────────────────────
+        function selecionarDeck(elemento, deck) {
+            document.querySelectorAll('#section-decks .deck-card').forEach(card => {
+                card.classList.remove('active');
+                card.querySelector('.deck-status').textContent = 'Selecionar Deck';
+            });
+            elemento.classList.add('active');
+            elemento.querySelector('.deck-status').textContent = '✓ Selecionado';
+            deckSelecionado = deck;
+            document.getElementById('btn-avancar-tiragem').style.display = 'flex';
+        }
+
+        // ─── Avança para tiragens ─────────────────────────────────────────────
+        function mostrarTiragens() {
+            showPage('tiragem-page');
+        }
+
+        // ─── Seleção de Tiragem ───────────────────────────────────────────────
+        function selecionarTiragem(elemento, tiragem) {
+            document.querySelectorAll('#section-tiragens .deck-card').forEach(card => {
+                card.classList.remove('active');
+                card.querySelector('.deck-status').textContent = 'Selecionar';
+            });
+            elemento.classList.add('active');
+            elemento.querySelector('.deck-status').textContent = '✓ Selecionado';
+            tiragemSelecionada = tiragem;
+            document.getElementById('btn-revelar').style.display = 'flex';
+        }
+
+        // ─── Tirar Cartas ─────────────────────────────────────────────────────
+        async function tirarCartas() {
+            if (!deckSelecionado || !tiragemSelecionada) return;
+
+            showPage('resultado-page');
+
+            const loading = document.getElementById('loading-tiragem');
+            const erro    = document.getElementById('erro-tiragem');
+            const grid    = document.getElementById('cartas-grid');
+            const simNao  = document.getElementById('resultado-sim-nao');
+
+            loading.style.display = 'block';
+            erro.style.display    = 'none';
+            grid.innerHTML        = '';
+            simNao.style.display  = 'none';
+
+            document.getElementById('titulo-resultado').textContent =
+                NOMES_TIRAGEM[tiragemSelecionada] || 'Sua Tiragem';
+
+            // Ajusta grid para número de cartas
+            const qtd = { 'passado-presente-futuro': 3, 'afrodite': 7, 'eris': 5, 'sim-nao': 1 };
+            const n = qtd[tiragemSelecionada] || 5;
+            grid.className = 'decks-grid' + (n === 1 ? ' grid-1' : n === 4 ? ' grid-4' : '');
+
+            try {
+                const res = await fetch(`${API_URL}/sortear?deck=${deckSelecionado}&tiragem=${tiragemSelecionada}`);
+                if (!res.ok) throw new Error('Erro');
+                const dados = await res.json();
+                loading.style.display = 'none';
+
+                tiragemSelecionada === 'sim-nao'
+                    ? renderizarSimNao(dados)
+                    : renderizarCartas(dados.cartas);
+            } catch (e) {
+                loading.style.display = 'none';
+                erro.style.display    = 'block';
+                console.error(e);
+            }
+        }
+
+        // ─── Renderização — tiragens normais ──────────────────────────────────
+        function renderizarCartas(cartas) {
+            const grid = document.getElementById('cartas-grid');
+            grid.innerHTML = '';
+            cartas.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'deck-card';
+                div.style.animationDelay = `${i * 0.15}s`;
+                div.innerHTML = `
+                    <div class="card-border-effect"></div>
+                    <span class="deck-icon">${ICONES[i % ICONES.length]}</span>
+                    <div class="deck-status" style="margin-bottom:0.5rem; opacity:1; color:var(--neon-gold);">${item.posicao}</div>
+                    <h3 class="deck-name" style="font-size:1rem;">${item.carta.nome}</h3>
+                    <p class="deck-desc">${item.carta.significado}</p>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        // ─── Renderização — Sim ou Não ────────────────────────────────────────
+        function renderizarSimNao(dados) {
+            const simNao = document.getElementById('resultado-sim-nao');
+            simNao.style.display = 'flex';
+
+            document.getElementById('sim-nao-resposta').textContent  = dados.resposta;
+            document.getElementById('sim-nao-explicacao').textContent = dados.explicacao;
+
+            document.getElementById('sim-nao-carta').innerHTML = `
+                <div class="deck-card" style="width:100%;">
+                    <div class="card-border-effect"></div>
+                    <span class="deck-icon">🌗</span>
+                    <div class="deck-status" style="margin-bottom:0.5rem; opacity:1; color:var(--neon-gold);">${dados.carta.posicao}</div>
+                    <h3 class="deck-name" style="font-size:1rem;">${dados.carta.carta.nome}</h3>
+                    <p class="deck-desc">${dados.carta.carta.significado}</p>
+                </div>
+            `;
+        }
+
+        // ─── Nova Tiragem — volta à home e expande o hero ─────────────────────
+        function novaTiragem() {
+            deckSelecionado    = null;
+            tiragemSelecionada = null;
+
+            document.querySelectorAll('.deck-card').forEach(card => {
+                card.classList.remove('active');
+                const s = card.querySelector('.deck-status');
+                if (s) s.textContent = s.closest('#section-tiragens') ? 'Selecionar' : 'Selecionar Deck';
+            });
+
+            document.getElementById('btn-avancar-tiragem').style.display = 'none';
+            document.getElementById('btn-revelar').style.display          = 'none';
+
+            // Volta para home e re-expande o hero
+            showPage('home-page');
+            expandirHero();
+        }
+    </script>
+
+</body>
+</html>
